@@ -12,21 +12,21 @@
 int
 main() {
     // PREPARE ARGS
-    executor_attr_t *attr = executor_attr_init();
+    subprocess_attr_t *attr = subprocess_attr_init();
     const char *args[] = {"/bin/ls", "/home", NULL};
-    executor_attr_setargs(attr, args);
-    executor_attr_setstdoutpath(attr, "/tmp/test.stdout");
-    executor_attr_setstderrpath(attr, "/tmp/test.stderr");
+    subprocess_attr_setargs(attr, args);
+    subprocess_attr_setstdoutpath(attr, "/tmp/test.stdout");
+    subprocess_attr_setstderrpath(attr, "/tmp/test.stderr");
 
-    executor_attr_setisolation(attr, 0);
+    subprocess_attr_setisolation(attr, 0);
 
-    executor_t *executor = executor_start(attr);
+    subprocess_t *executor = subprocess_start(attr);
 
-    fprintf(stderr, "%d\n", executor_getpid(executor));
+    fprintf(stderr, "%d\n", subprocess_getpid(executor));
     fprintf(stderr, "%s\n", strerror(errno));
 
     int status;
-    int ret = waitpid(executor_getpid(executor), &status, 0);
+    int ret = waitpid(subprocess_getpid(executor), &status, 0);
 
     fprintf(stderr, "%d\n", ret);
     fprintf(stderr, "%d\n", status);
@@ -35,21 +35,21 @@ main() {
     fprintf(stderr, "%d\n", WIFSIGNALED(status));
     fprintf(stderr, "%d\n", WEXITSTATUS(status));
 
-    //if (-1 == executor_getpid(executor)) {
+    //if (-1 == subprocess_getpid(executor)) {
     // return ret;
     //}
 
     // WAIT ON CHILD'S END
-    //if (!executor_wait(executor, 0)) {
+    //if (!subprocess_wait(executor, 0)) {
     // return -1;
     //}
 
     // GET CHILD'S STATUS
-    //const int status = executor_getstatus(executor);
+    //const int status = subprocess_getstatus(executor);
 
     // CLEANUP
-    executor_attr_destroy(attr);
-    executor_destroy(executor);
+    subprocess_attr_destroy(attr);
+    subprocess_destroy(executor);
     return 0;
 }
 
