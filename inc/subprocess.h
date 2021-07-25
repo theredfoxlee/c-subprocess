@@ -1,10 +1,10 @@
-typedef struct executor subprocesst;
-typedef struct subprocessattr subprocessattr_t;
+typedef struct executor subprocess_t;
+typedef struct subprocess_attr subprocess_attr_t;
 
-subprocesst *subprocessstart(const subprocessattr_t *attr);
-void subprocessdestroy(subprocesst *executor);
+subprocess_t *subprocess_start(const subprocess_attr_t *attr);
+void subprocess_destroy(subprocess_t *executor);
 
-//bool subprocesswait(subprocesst *executor, useconds_t timeout);
+//bool subprocess_wait(subprocess_t *executor, useconds_t timeout);
 
-int subprocessgetpid(const subprocesst *executor);
-int subprocessgetstatus(const subprocesst *executor);
+int subprocess_getpid(const subprocess_t *executor);
+int subprocess_getstatus(const subprocess_t *executor);
