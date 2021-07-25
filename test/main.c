@@ -1,6 +1,13 @@
+#include "subprocess.h"
 #include "subprocess_attr.h"
 
 #include <stddef.h>
+
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 int
 main() {
@@ -13,35 +20,36 @@ main() {
 
     executor_attr_setisolation(attr, 0);
 
-    // executor_t *executor = executor_start(attr);
+    executor_t *executor = executor_start(attr);
 
-    // fprintf(stderr, "%d\n", executor_getpid(executor));
-    // fprintf(stderr, "%s\n", strerror(errno));
+    fprintf(stderr, "%d\n", executor_getpid(executor));
+    fprintf(stderr, "%s\n", strerror(errno));
 
-    // int status;
-    // int ret = waitpid(executor_getpid(executor), &status, 0);
+    int status;
+    int ret = waitpid(executor_getpid(executor), &status, 0);
 
-    // fprintf(stderr, "%d\n", ret);
-    // fprintf(stderr, "%d\n", status);
+    fprintf(stderr, "%d\n", ret);
+    fprintf(stderr, "%d\n", status);
 
-    // fprintf(stderr, "%d\n", WIFEXITED(status));
-    // fprintf(stderr, "%d\n", WIFSIGNALED(status));
-    // fprintf(stderr, "%d\n", WEXITSTATUS(status));
+    fprintf(stderr, "%d\n", WIFEXITED(status));
+    fprintf(stderr, "%d\n", WIFSIGNALED(status));
+    fprintf(stderr, "%d\n", WEXITSTATUS(status));
 
-    // if (-1 == executor_getpid(executor)) {
-    //  return ret;
-    // }
+    //if (-1 == executor_getpid(executor)) {
+    // return ret;
+    //}
 
-    // // WAIT ON CHILD'S END
-    // if (!executor_wait(executor, 0)) {
-    //  return -1;
-    // }
+    // WAIT ON CHILD'S END
+    //if (!executor_wait(executor, 0)) {
+    // return -1;
+    //}
 
-    // // GET CHILD'S STATUS
-    // const int status = executor_getstatus(executor);
+    // GET CHILD'S STATUS
+    //const int status = executor_getstatus(executor);
 
-    // // CLEANUP
+    // CLEANUP
     executor_attr_destroy(attr);
+    executor_destroy(executor);
     return 0;
 }
 

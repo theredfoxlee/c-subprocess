@@ -11,6 +11,7 @@ project(
 add_library(
     subprocess
     SHARED
+    src/subprocess.c
     src/subprocess_attr.c
 )
 
